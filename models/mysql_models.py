@@ -10,7 +10,7 @@ class MysqlModels():
         self.db_user     = "admin"
         self.db_password = "29959952"
         self.db_dbName   = "again"
-        print('~~~~~~~~~~~~~~~~~~~~DB Start~~~~~~~~~~~~~~~~~~~~~~~')
+        print('~~~~~~~~~~~~~~~~~~~~DB Start~~~~~~~~~~~~~~~~~~~~')
 
     def selectList(self, table, select='*', where='', limit=10, offset=0, order_by='`ID` ASC'):
         db = MySQLdb.connect(self.db_host, self.db_user, self.db_password, self.db_dbName, charset='utf8')
@@ -32,5 +32,7 @@ class MysqlModels():
         # 关闭数据库连接
         db.close()
 
-#mmm = MysqlModels()
-#mmm.selectList('again_goods','*','`ID` < 1000', 0, 5,'`ID` ASC')
+if __name__ == '__main__':
+    print('单独运行此文件，以下代码将被执行')
+    mmm = MysqlModels()
+    mmm.selectList('again_goods','*','`ID` < 1000', 0, 5,'`ID` ASC')

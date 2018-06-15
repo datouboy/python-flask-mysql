@@ -18,9 +18,10 @@ def indexPage():
 
 @app.route('/momo/')
 def momoPage():
-    array_list = mysql_models.selectList('again_goods','*','`ID` < 1000', 0, 5,'`ID` ASC')
-    print(array_list)
-    return 'Hello Momo!'
+    array_list = mysql_models.selectList('again_goods','*','`ID` < 1000', 0, 2,'`ID` ASC')
+    #print(array_list)
+    #return 'Hello Momo!'
+    return render_template('momo.html', array_list=array_list)
 
 @app.route('/momo_photo/<picNum>')
 def momoPhoto(picNum):
@@ -37,5 +38,11 @@ def show_post(post_id):
 def hello(name=None):
     return render_template('index.html', name=name)
 
+
+'''
+  if __name__ == '__main__'的意思是：
+  当.py文件被直接运行时，if __name__ == '__main__'之下的代码块将被运行；
+  当.py文件以模块形式被导入时，if __name__ == '__main__'之下的代码块不被运行。
+'''
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
