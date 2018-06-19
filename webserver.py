@@ -18,7 +18,24 @@ def indexPage():
 
 @app.route('/momo/')
 def momoPage():
+    # 查询数据
     array_list = mysql_models.selectList('again_goods','*','`ID` < 1000', 0, 2,'`ID` ASC')
+    # 查询数据条数
+    count_num = mysql_models.selectCount('again_goods','')
+    param = {
+        'Mobile' : 23123,
+        'Type' : 1,
+        'State' : 1,
+        'SmsID' : 223,
+        'VCode' : 1,
+        'PostTime' : 111111
+    }
+    # 插入数据
+    new_id = mysql_models.insert('again_sms_post', param)
+    # 更新数据
+    mysql_models.updata('again_sms_post', '`ID` = 2', param)
+    # 删除数据
+    mysql_models.delData('again_sms_post', '`ID` = 29')
     #print(array_list)
     #return 'Hello Momo!'
     return render_template('momo.html', array_list=array_list)
