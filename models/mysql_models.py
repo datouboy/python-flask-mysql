@@ -1,5 +1,7 @@
-####!/usr/bin/python
+####!/usr/bin/python3
 # -*- coding: UTF-8 -*-
+# @Time    : 2018/6/19
+# @File    : mysql_models.py
 
 import MySQLdb
 # 查看try except捕获的异常
@@ -39,8 +41,22 @@ class MysqlModels():
             print('~~~~~~~~~~~ selectList error ~~~~~~~~~~~')
             traceback.print_exc()
 
+        # 关闭指针对象
+        cursor.close()
         # 关闭数据库连接
         db.close()
+
+    # 根据ID查询具体内容
+    def selectContent(self, table, select='*', id=''):
+        where = '`ID` = %s' % (id)
+        results = self.selectList(table, select, where, 0, 1, '`ID` ASC')
+        if len(results) > 0:
+            results = results[0]
+        else:
+            results = []
+        #print(results)
+        return results
+
 
     # 查询列表纪录数，直接返回数字
     def selectCount(self, table, where=''):
@@ -66,6 +82,8 @@ class MysqlModels():
             print('~~~~~~~~~~~ selectCount error ~~~~~~~~~~~')
             traceback.print_exc()
 
+        # 关闭指针对象
+        cursor.close()
         # 关闭数据库连接
         db.close()
 
@@ -120,6 +138,8 @@ class MysqlModels():
             traceback.print_exc()
         
 
+        # 关闭指针对象
+        cursor.close()
         # 关闭数据库连接
         db.close()
 
@@ -166,6 +186,8 @@ class MysqlModels():
             print('~~~~~~~~~~~ updata error ~~~~~~~~~~~')
             traceback.print_exc()
         
+        # 关闭指针对象
+        cursor.close()
         # 关闭数据库连接
         db.close()
 
@@ -177,7 +199,7 @@ class MysqlModels():
 
         if where == '':
             where = 'WHERE `ID` < 0'
-            print('delData 函数内容为空，已拦截')
+            print('where为空，已拦截')
         else:
             where = """WHERE %(where)s""" % {'where':where}
 
@@ -195,6 +217,31 @@ class MysqlModels():
             print('~~~~~~~~~~~ delData error ~~~~~~~~~~~')
             traceback.print_exc()
         
+        # 关闭指针对象
+        cursor.close()
+        # 关闭数据库连接
+        db.close()
+
+    # 清空表中数据
+    def truncateTable(self, table):
+        db = MySQLdb.connect(self.db_host, self.db_user, self.db_password, self.db_dbName, charset='utf8')
+        cursor = db.cursor()
+
+        sqlText = """TRUNCATE `%(table)s`;""" % {'table':table}
+        try:
+            # 执行sql语句
+            cursor.execute(sqlText)
+            # 提交到数据库执行
+            db.commit()
+            return True
+        except:
+            # 出错后数据回滚
+            db.rollback()
+            print('~~~~~~~~~~~ truncateTable error ~~~~~~~~~~~')
+            traceback.print_exc()
+        
+        # 关闭指针对象
+        cursor.close()
         # 关闭数据库连接
         db.close()
 

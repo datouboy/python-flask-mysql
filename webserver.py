@@ -1,5 +1,7 @@
-####!/usr/bin/python
+####!/usr/bin/python3
 # -*- coding: UTF-8 -*-
+# @Time    : 2018/6/19
+# @File    : webserver.py
 
 # flask，轻量级web框架
 from flask import Flask
@@ -31,14 +33,16 @@ def momoPage():
         'PostTime' : 111111
     }
     # 插入数据
-    new_id = mysql_models.insert('again_sms_post', param)
+    #new_id = mysql_models.insert('again_sms_post', param)
     # 更新数据
-    mysql_models.updata('again_sms_post', '`ID` = 2', param)
+    #mysql_models.updata('again_sms_post', '`ID` = 2', param)
     # 删除数据
-    mysql_models.delData('again_sms_post', '`ID` = 29')
+    #mysql_models.delData('again_sms_post', '`ID` = 29')
+    # 根据ID查询数据
+    content = mysql_models.selectContent('again_siteinfo', '*', 1)
     #print(array_list)
     #return 'Hello Momo!'
-    return render_template('momo.html', array_list=array_list)
+    return render_template('momo.html', array_list=array_list, content=content)
 
 @app.route('/momo_photo/<picNum>')
 def momoPhoto(picNum):
@@ -62,4 +66,4 @@ def hello(name=None):
   当.py文件以模块形式被导入时，if __name__ == '__main__'之下的代码块不被运行。
 '''
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
