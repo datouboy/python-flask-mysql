@@ -38,6 +38,7 @@
 ├── README.md           
 ├── webserver.py             // 项目主文件
 ├── print                    // 项目截图目录
+├── static                   // 静态资源目录
 ├── models                   // MySQL数据库models目录
 │   └── mysql_models.py      // MySQL数据库models
 ├── templates                // 模板目录

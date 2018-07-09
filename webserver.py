@@ -9,10 +9,13 @@ from flask import Flask
 from flask import render_template
 # 加载自己编写的mysql models
 from models.mysql_models import MysqlModels
+# 加载自己编写的mysql models
+from printtopdesk.print_top_desk import PrintTopDesk
 
 app = Flask(__name__)
 
 mysql_models = MysqlModels()
+print_desk = PrintTopDesk()
 
 @app.route('/')
 def indexPage():
@@ -58,6 +61,11 @@ def show_post(post_id):
 @app.route('/my_momo/<name>')
 def hello(name=None):
     return render_template('index.html', name=name)
+
+@app.route('/print/')
+def print_desk_show():
+    print_desk.printdesk()
+    return render_template('desktop.html')
 
 
 '''
